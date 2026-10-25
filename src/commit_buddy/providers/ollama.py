@@ -10,7 +10,12 @@ class OllamaProvider(AIProvider):
 
     def __init__(self, model: str, host: str) -> None:
         self.model = model
-        self.client = Client(host=host, timeout=60.0)
+        self.host = host
+
+        self.client = Client(
+            host=host,
+            timeout=120.0,
+        )
 
     def generate(self, prompt: str) -> str:
         """Generate a response using Ollama."""
@@ -36,6 +41,13 @@ class OllamaProvider(AIProvider):
 
         except AIProviderError:
             raise
+
+        except ConnectionError as exc:
+            raise AIProviderError(
+                f"Cannot connect to Ollama at {self.host}. "
+                "Check whether the server is running "
+                "and the host is configured correctly."
+            ) from exc
 
         except Exception as exc:
             raise AIProviderError(
