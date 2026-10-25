@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "commit-buddy"
+version = "0.1.0"
+description = "AI-powered Conventional Commit message generator"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+    { name = "Jan Frielinghaus" }
+]
+dependencies = [
+    "python-dotenv",
+    "rich",
+    "openai",
+    "anthropic",
+    "ollama"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff"
+]
+
+[project.scripts]
+commit-buddy = "commit_buddy.cli:main"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
