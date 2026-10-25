@@ -1,0 +1,1 @@
+Commit-Buddy CLI smoke test

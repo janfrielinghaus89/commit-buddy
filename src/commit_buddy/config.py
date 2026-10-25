@@ -105,6 +105,12 @@ def load_config() -> Config:
         "http://localhost:11434",
     )
 
+    if ollama_host in {"0.0.0.0", "http://0.0.0.0", "http://0.0.0.0:11434"}:
+        raise ConfigurationError(
+            "OLLAMA_HOST is set to 0.0.0.0, which is a server bind address. "
+            "Use http://127.0.0.1:11434 for a local Ollama connection."
+        )
+
     if not ollama_host:
         raise ConfigurationError("OLLAMA_HOST cannot be empty.")
 
